@@ -1,0 +1,14 @@
+
+tasks:
+  # - init: go get && go build ./... && go test ./...
+  - init: >
+      go get
+    command:
+      go run .
+ports:
+  - port: 8080
+    onOpen: open-preview
+
+vscode:
+  extensions:
+    - golang.goote git repository to share the goodness with others.

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SubTidal</title>
+    <link rel="stylesheet" href="/styles/main.css" /> 
+<script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <h1>SubTidal</h1>
+    {{range $i, $a := .boardList}}
+
+        <a href="/{{$a}}">{{$a}}</a> 
+    {{end}}
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SubTidal - {{ .boardName }}</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>{{.boardName}}</h1>
+    <div class="nav-menu">
+        <a href="/">Home</a> <span> | </span>
+        {{ range $i, $a := .boardList }}
+            <a href="/{{$a}}">{{$a}}</a> 
+        {{ end }}
+    </div>
+    <div class="thread">
+        <h2>{{.thread.Name}}:</h2>
+        <span>{{.thread.Id}}</span>
+        <p>{{.thread.Body}}</p>
+    </div>
+    {{ range .thread.Posts }}
+        <div class="post">
+            <p class="post-id">{{ .Id }}</p>
+            {{ if $.showAdminTools }}
+                <form action="/{{$.boardName}}/remove/post/{{.Id}}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Delete</button>
+                </form>
+            {{ end }}
+            <p class="post-text">{{ .Body }}</p>
+        </div>
+    {{ end }}
+    <form hx-post="/{{.boardName}}/{{.thread.Id}}" hx-target="body">
+        <textarea class="text-input" name="body" rows="6" cols="38"></textarea>
+        <input class="text-submit" type="submit" value="Submit">
+    </form>
+</body>
+</html>

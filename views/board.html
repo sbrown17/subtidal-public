@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SubTidal - {{.board.Name}}</title>
+    <link rel="stylesheet" href="/styles/main.css" /> 
+    <!-- <script src="../scripts/htmx.min.js"></script> -->
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>{{.board.Name}}</h1>
+    <div class="nav-menu">
+        <a href="/">Home</a> <span> | </span>
+        {{range $i, $a := .boardList}}
+            <a href="/{{$a}}">{{$a}}</a> 
+        {{end}}
+    </div>
+    {{range .board.Threads}}
+    <div class="thread">
+        <h2>{{.Name}}: </h2>
+        <span>{{.Id}}</span>
+        {{ if $.showAdminTools }}
+            <form action="/{{$.board.Name}}/remove/thread/{{ .Id }}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Delete</button>
+            </form>
+        {{ end }}
+        <p>{{.Body}}</p>
+        <a href="{{$.board.Name}}/{{.Id}}">Go to thread...</a>
+    </div>
+    {{end}}
+    <form hx-post="/{{.board.Name}}" hx-target="body">
+        <input class="input-name-thread" size="39" type="text" name="name" placeholder="title" />
+        <textarea class="text-input-thread" name="body" rows="6" cols="38"></textarea>
+        <input class="text-submit-thread" type="submit" value="Submit">
+    </form>
+</body>
+</html>
